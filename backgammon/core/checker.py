@@ -1,19 +1,15 @@
 class Checker:
     """
     Representa una ficha de Backgammon
-    Atributos:
-        __color__ (str): Color o símbolo del jugador al que pertenece la ficha ("X" o "O")
     """
-    def __init__(self, color):
+    def __init__(self, simbolo):
         """
-        Inicializa una ficha con el color/símbolo del jugador
-        Args:
-            color (str): "X" o "O" según el jugador
+        Inicializa una ficha con el color del jugador
         """
         self.__color__ = color
 
     def get_color(self):
-        """Devuelve el color/símbolo de la ficha."""
+        """Devuelve el color de la ficha"""
         return self.__color__
 
     def __str__(self):
