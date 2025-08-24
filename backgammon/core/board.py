@@ -1,3 +1,5 @@
+
+from .checker import Checker
 class Board:
     """
     Representa el tablero de la partida de backgammon
@@ -13,5 +15,21 @@ class Board:
         self.__puntos__=[[]for _ in range(24)]
         self.__barra__={"X":[],"O" : []}
         self.inicializar_tablero()
-
     def inicializar_tablero(self):
+        """
+        Coloca las fichas en la posición inicial estándar de Backgammon usando objetos Checker
+        """
+        self.__puntos__ = [[] for _ in range(24)]
+        # Fichas del jugador X
+        self.__puntos__[23] = [Checker("X"), Checker("X")]                
+        self.__puntos__[12] = [Checker("X") for _ in range(5)]             
+        self.__puntos__[7]  = [Checker("X") for _ in range(3)]             
+        self.__puntos__[5]  = [Checker("X") for _ in range(5)]             
+        # Fichas del jugador O
+        self.__puntos__[0]  = [Checker("O"), Checker("O")]                
+        self.__puntos__[11] = [Checker("O") for _ in range(5)]             
+        self.__puntos__[16] = [Checker("O") for _ in range(3)]             
+        self.__puntos__[18] = [Checker("O") for _ in range(5)]             
+        # Limpio la barra
+        self.__barra__ = {"X": [], "O": []}
+
