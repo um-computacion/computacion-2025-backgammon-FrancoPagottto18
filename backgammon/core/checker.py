@@ -2,7 +2,7 @@ class Checker:
     """
     Representa una ficha de Backgammon
     """
-    def __init__(self, simbolo):
+    def __init__(self, color):
         """
         Inicializa una ficha con el color del jugador
         """
