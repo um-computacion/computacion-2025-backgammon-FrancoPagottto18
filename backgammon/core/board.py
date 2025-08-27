@@ -47,4 +47,19 @@ class Board:
             self.__puntos__[punto].pop()                
 
             return True
+    
+    def agregar_barra(self, color):
+        """
+        Agrega una ficha a la barra
+        """
+        self.__barra__[color].append(Checker(color))
+    def quitar_barra(self, color):
+        """
+        Quita una ficha de la barra
+        """
+        if self.__barra__[color] == []:
+            return False
+        else:
+            self.__barra__[color].remove(Checker(color))
+            return True
   
