@@ -25,7 +25,7 @@ class Board:
         self.__puntos__[12] = [Checker("blanco") for _ in range(5)]             
         self.__puntos__[7]  = [Checker("blanco") for _ in range(3)]             
         self.__puntos__[5]  = [Checker("blanco") for _ in range(5)]             
-        # Fichas del jugador O
+        # Fichas del jugador negro
         self.__puntos__[0]  = [Checker("negro"), Checker("negro")]                
         self.__puntos__[11] = [Checker("negro") for _ in range(5)]             
         self.__puntos__[16] = [Checker("negro") for _ in range(3)]             
