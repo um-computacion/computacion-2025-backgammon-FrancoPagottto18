@@ -62,4 +62,13 @@ class Board:
         else:
             self.__barra__[color].remove(Checker(color))
             return True
-  
+    def obtener_puntos(self):
+        """
+        Obtiene los puntos del tablero
+        """
+        return self.__puntos__
+    def obtener_barra(self):
+        """
+        Obtiene la barra del tablero
+        """
+        return self.__barra__
