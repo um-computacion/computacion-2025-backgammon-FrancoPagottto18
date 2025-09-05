@@ -17,7 +17,7 @@ class Dice:
         self.__dado2__ = random.randint(1, 6)
         self.__tirada_doble__ = (self.__dado1__ == self.__dado2__)
         return self.get_valores()
-     def get_valores(self):
+    def get_valores(self):
         """
         Retorna lista con los valores de los dados,si es doble, repite el valor 4 veces
         """
@@ -31,3 +31,12 @@ class Dice:
         Retorna True si la última tirada fue doble
         """
         return self.__tirada_doble__
+    
+    def get_dado1(self):
+        return self.__dado1__
+
+    def get_dado2(self):
+        return self.__dado2__
+
+    def __repr__(self):
+        return f"Dice({self.__dado1__}, {self.__dado2__}, doble={self.__tirada_doble__})"
