@@ -1,4 +1,3 @@
-from backgammon.core.Player import Player
 from backgammon.core.checker import Checker
 class Board:
     """
