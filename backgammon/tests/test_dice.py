@@ -11,3 +11,13 @@ class TestDice(unittest.TestCase):
         self.assertFalse(d.es_doble())
         self.assertEqual(d.get_valores(), [0, 0])
 
+
+    @patch("backgammon.core.dice.random.randint", side_effect=[3, 5])
+    def test_tirar_normal(self, _mock_randint):
+        d = Dice()
+        valores = d.tirar()
+        self.assertEqual(valores, [3, 5])
+        self.assertEqual(d.get_dado1(), 3)
+        self.assertEqual(d.get_dado2(), 5)
+        self.assertFalse(d.es_doble())
+        self.assertEqual(d.get_valores(), [3, 5])
