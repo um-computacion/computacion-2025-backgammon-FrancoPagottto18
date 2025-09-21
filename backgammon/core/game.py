@@ -28,4 +28,32 @@ class Game:
         self.__turno_actual__ = self.__player1__  
         self.__juego_terminado__ = False
         self.__ganador__ = None
-  
+    
+    def get_board(self):
+        """
+        Retorna el tablero del juego
+        
+        Returns:
+            Board: El tablero actual
+        """
+        return self.__board__
+    
+    def get_player1(self):
+        """
+        Retorna el primer jugador
+        
+        Returns:
+            Player: Jugador 1 (blanco)
+        """
+        return self.__player1__
+    
+    def get_player2(self):
+        """
+        Retorna el segundo jugador
+        
+        Returns:
+            Player: Jugador 2 (negro)
+        """
+        return self.__player2__
+    
+ 
