@@ -55,5 +55,23 @@ class Game:
             Player: Jugador 2 (negro)
         """
         return self.__player2__
+         def get_dice(self):
+        """
+        Retorna los dados del juego
+        
+        Returns:
+            Dice: Los dados del juego
+        """
+        return self.__dice__
+    
+    def get_turno_actual(self):
+        """
+        Retorna el jugador que tiene el turno actual
+        
+        Returns:
+            Player: Jugador actual
+        """
+        return self.__turno_actual__
+    
     
  
