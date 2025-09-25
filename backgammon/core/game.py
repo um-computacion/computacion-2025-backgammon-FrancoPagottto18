@@ -72,6 +72,14 @@ class Game:
             Player: Jugador actual
         """
         return self.__turno_actual__
+    def cambiar_turno(self):
+        """
+        Cambia el turno al siguiente jugador
+        """
+        if self.__turno_actual__ == self.__player1__:
+            self.__turno_actual__ = self.__player2__
+        else:
+            self.__turno_actual__ = self.__player1__
     
     
  
