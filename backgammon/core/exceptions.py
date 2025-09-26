@@ -6,3 +6,8 @@ class GameError(Exception):
 class MovimientoInvalidoError(GameError):
     """Excepción para movimientos inválidos"""
     pass
+
+
+class JuegoTerminadoError(GameError):
+    """Excepción para operaciones en un juego terminado"""
+    pass

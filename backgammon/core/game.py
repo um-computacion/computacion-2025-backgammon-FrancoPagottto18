@@ -1,7 +1,7 @@
 from backgammon.core.board import Board
 from backgammon.core.Player import Player
 from backgammon.core.dice import Dice
-from backgammon.core.exceptions import GameError, MovimientoInvalidoError
+from backgammon.core.exceptions import GameError, MovimientoInvalidoError, JuegoTerminadoError
 
 
 class Game:
@@ -55,7 +55,8 @@ class Game:
             Player: Jugador 2 (negro)
         """
         return self.__player2__
-         def get_dice(self):
+    
+    def get_dice(self):
         """
         Retorna los dados del juego
         
@@ -72,6 +73,7 @@ class Game:
             Player: Jugador actual
         """
         return self.__turno_actual__
+    
     def cambiar_turno(self):
         """
         Cambia el turno al siguiente jugador
@@ -81,5 +83,43 @@ class Game:
         else:
             self.__turno_actual__ = self.__player1__
     
+    def tirar_dados(self):
+        """
+        Tira los dados y retorna los valores
+        
+        Returns:
+            list: Lista con los valores de los dados
+            
+        Raises:
+            JuegoTerminadoError: Si el juego ya terminó
+        """
+        if self.__juego_terminado__:
+            raise JuegoTerminadoError("No se pueden tirar dados en un juego terminado")
+        
+        return self.__dice__.tirar()
     
- 
+    def mover_ficha(self, desde, hacia):
+        """
+        Mueve una ficha en el tablero
+        
+        Args:
+            desde (int): Punto de origen (-1 para fichas eliminadas)
+            hacia (int): Punto de destino (-1 para eliminar ficha)
+            
+        Raises:
+            JuegoTerminadoError: Si el juego ya terminó
+            MovimientoInvalidoError: Si el movimiento no es válido
+        """
+        if self.__juego_terminado__:
+            raise JuegoTerminadoError("No se pueden hacer movimientos en un juego terminado")
+        
+        color_actual = self.__turno_actual__.get_color()
+        self.__board__.mover_ficha(desde, hacia, color_actual)
+        
+        # Si se movió una ficha a casa, actualizar el jugador
+        if hacia == -1:  # Ficha eliminada
+            self.__turno_actual__.eliminar_ficha()
+        elif self.__es_casa_jugador__(hacia, color_actual):
+            self.__turno_actual__.mover_ficha_a_casa()
+    
+  
