@@ -6,14 +6,16 @@ from backgammon.core.exceptions import GameError, MovimientoInvalidoError, Juego
 
 class Game:
     """
-    Clase principal que maneja la lógica del juego de Backgammon
+    Clase principal que coordina el flujo general del juego de Backgammon
     """
     def __init__(self, nombre_jugador1, nombre_jugador2):
         """
         Inicializa una nueva partida de Backgammon
+        
         Args:
             nombre_jugador1 (str): Nombre del primer jugador
             nombre_jugador2 (str): Nombre del segundo jugador
+            
         Raises:
             ValueError: Si los nombres son inválidos
         """
@@ -21,6 +23,7 @@ class Game:
             raise ValueError("Los nombres de los jugadores no pueden estar vacíos")
         if nombre_jugador1 == nombre_jugador2:
             raise ValueError("Los nombres de los jugadores deben ser diferentes")
+        
         self.__board__ = Board()
         self.__player1__ = Player(nombre_jugador1, "blanco")
         self.__player2__ = Player(nombre_jugador2, "negro")
@@ -103,7 +106,7 @@ class Game:
         Mueve una ficha en el tablero
         
         Args:
-            desde (int): Punto de origen (-1 para fichas eliminadas)
+            desde (int): Punto de origen (-1 para fichas en barra)
             hacia (int): Punto de destino (-1 para eliminar ficha)
             
         Raises:
@@ -114,12 +117,28 @@ class Game:
             raise JuegoTerminadoError("No se pueden hacer movimientos en un juego terminado")
         
         color_actual = self.__turno_actual__.get_color()
-        self.__board__.mover_ficha(desde, hacia, color_actual)
         
-        # Si se movió una ficha a casa, actualizar el jugador
-        if hacia == -1:  # Ficha eliminada
-            self.__turno_actual__.eliminar_ficha()
-        elif self.__es_casa_jugador__(hacia, color_actual):
-            self.__turno_actual__.mover_ficha_a_casa()
-    
-  
+        # Validar posiciones
+        if desde != -1 and not 0 <= desde <= 23:
+            raise ValueError("La posición de origen debe estar entre 0 y 23 o ser -1")
+        if hacia != -1 and not 0 <= hacia <= 23:
+            raise ValueError("La posición de destino debe estar entre 0 y 23 o ser -1")
+        
+        # No se puede mover al mismo punto
+        if desde == hacia:
+            raise MovimientoInvalidoError("No se puede mover una ficha al mismo punto")
+        
+        # Verificar que hay fichas en el punto de origen
+        if desde == -1:
+            # Mover desde la barra
+            if len(self.__board__.get_barra()[color_actual]) == 0:
+                raise MovimientoInvalidoError("No hay fichas en la barra para reintroducir")
+        else:
+            # Mover desde un punto del tablero
+            puntos = self.__board__.get_puntos()
+            if len(puntos[desde]) == 0:
+                raise MovimientoInvalidoError(f"No hay fichas en el punto {desde}")
+            if puntos[desde][0].get_color() != color_actual:
+                raise MovimientoInvalidoError(f"Las fichas en el punto {desde} no son del color {color_actual}")
+        
+       
