@@ -141,4 +141,22 @@ class Game:
             if puntos[desde][0].get_color() != color_actual:
                 raise MovimientoInvalidoError(f"Las fichas en el punto {desde} no son del color {color_actual}")
         
+        # Verificar destino
+        if hacia == -1:
+            # Eliminar ficha (llevar a casa)
+            if desde == -1:
+                raise MovimientoInvalidoError("No se puede eliminar una ficha ya en la barra")
+        else:
+            # Mover a un punto del tablero
+            puntos = self.__board__.get_puntos()
+            
+            # Verificar si el punto está ocupado por el oponente
+            if len(puntos[hacia]) > 0 and puntos[hacia][0].get_color() != color_actual:
+                if len(puntos[hacia]) > 1:
+                    raise MovimientoInvalidoError(f"El punto {hacia} está bloqueado por el oponente")
+                # Si hay solo una ficha del oponente, se puede "comer"
+                ficha_comida = puntos[hacia][0]
+                self.__board__.quitar_ficha(hacia)
+                self.__board__.agregar_barra(ficha_comida.get_color())
+        
        
