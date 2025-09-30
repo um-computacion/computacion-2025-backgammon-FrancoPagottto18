@@ -158,5 +158,17 @@ class Game:
                 ficha_comida = puntos[hacia][0]
                 self.__board__.quitar_ficha(hacia)
                 self.__board__.agregar_barra(ficha_comida.get_color())
+          
+        # Realizar el movimiento
+        if desde == -1:
+            # Reintroducir ficha desde la barra
+            self.__board__.quitar_barra(color_actual)
+        else:
+            # Mover desde un punto del tablero
+            self.__board__.quitar_ficha(desde)
+        
+        if hacia != -1:
+            # Mover a un punto del tablero
+            self.__board__.agregar_ficha(color_actual, hacia)
         
        
