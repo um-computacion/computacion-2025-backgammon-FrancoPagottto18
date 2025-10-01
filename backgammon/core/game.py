@@ -170,5 +170,41 @@ class Game:
         if hacia != -1:
             # Mover a un punto del tablero
             self.__board__.agregar_ficha(color_actual, hacia)
+
+         
+    def verificar_ganador(self):
+        """
+        Verifica si hay un ganador y actualiza el estado del juego
+        
+        Returns:
+            Player or None: El ganador si existe, None si no hay ganador aún
+        """
+        # Verificar si algún jugador tiene todas sus fichas en casa
+        puntos = self.__board__.get_puntos()
+        
+        # Verificar jugador blanco (casa: puntos 18-23)
+        fichas_blancas_en_casa = 0
+        for i in range(18, 24):
+            for ficha in puntos[i]:
+                if ficha.get_color() == "blanco":
+                    fichas_blancas_en_casa += 1
+        
+        # Verificar jugador negro (casa: puntos 0-5)
+        fichas_negras_en_casa = 0
+        for i in range(6):
+            for ficha in puntos[i]:
+                if ficha.get_color() == "negro":
+                    fichas_negras_en_casa += 1
+        
+        if fichas_blancas_en_casa == 15:
+            self.__juego_terminado__ = True
+            self.__ganador__ = self.__player1__
+            return self.__player1__
+        elif fichas_negras_en_casa == 15:
+            self.__juego_terminado__ = True
+            self.__ganador__ = self.__player2__
+            return self.__player2__
+        return None
+    
         
        
