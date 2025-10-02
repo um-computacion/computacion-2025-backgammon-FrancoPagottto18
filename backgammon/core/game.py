@@ -206,5 +206,34 @@ class Game:
             return self.__player2__
         return None
     
+    def get_ganador(self):
+        """
+        Retorna el ganador del juego
+        
+        Returns:
+            Player or None: El ganador si existe, None si no hay ganador
+        """
+        return self.__ganador__
+    
+    def juego_terminado(self):
+        """
+        Verifica si el juego ha terminado
+        
+        Returns:
+            bool: True si el juego ha terminado
+        """
+        return self.__juego_terminado__
+    
+    def reiniciar_juego(self):
+        """
+        Reinicia el juego a su estado inicial
+        """
+        self.__board__ = Board()
+        self.__dice__ = Dice()
+        self.__turno_actual__ = self.__player1__
+        self.__juego_terminado__ = False
+        self.__ganador__ = None
+   
+    
         
        
