@@ -77,3 +77,78 @@ class TestGame(unittest.TestCase):
         self.assertEqual(game.get_dice().get_dado1(), 4)
         self.assertEqual(game.get_dice().get_dado2(), 4)
         self.assertTrue(game.get_dice().es_doble())
+     def test_tirar_dados_juego_terminado(self):
+        """Test que no se pueden tirar dados en juego terminado"""
+        game = Game("Colo", "Juan")
+        game.__juego_terminado__ = True
+        
+        with self.assertRaises(JuegoTerminadoError):
+            game.tirar_dados()
+    
+    def test_mover_ficha_valido(self):
+        """Test de movimiento válido de ficha"""
+        game = Game("Colo", "Juan")
+        
+        # Mover ficha blanca del punto 5 al punto 4 (punto 5 tiene fichas blancas)
+        game.mover_ficha(5, 4)
+        
+        # Verificar que se movió correctamente
+        puntos = game.get_board().get_puntos()
+        self.assertEqual(len(puntos[5]), 4)  # Quedaron 4 fichas en punto 5 (tenía 5)
+        self.assertEqual(len(puntos[4]), 1)  # Hay 1 ficha en punto 4
+        self.assertEqual(puntos[4][0].get_color(), "blanco")
+    
+    def test_mover_ficha_desde_barra(self):
+        """Test de reintroducir ficha desde la barra"""
+        game = Game("Colo", "Juan")
+        
+        # Primero poner una ficha en la barra
+        game.get_board().agregar_barra("blanco")
+        
+        # Reintroducir desde la barra al punto 6 (punto vacío)
+        game.mover_ficha(-1, 6)
+        
+        # Verificar que se reintrodujo
+        self.assertEqual(len(game.get_board().get_barra()["blanco"]), 0)
+        puntos = game.get_board().get_puntos()
+        self.assertEqual(len(puntos[6]), 1)  # 1 ficha reintroducida
+    
+    def test_mover_ficha_invalido_mismo_punto(self):
+        """Test que falla al mover al mismo punto"""
+        game = Game("Colo", "Juan")
+        
+        with self.assertRaises(MovimientoInvalidoError):
+            game.mover_ficha(0, 0)
+    
+    def test_mover_ficha_invalido_punto_vacio(self):
+        """Test que falla al mover desde punto vacío"""
+        game = Game("Colo", "Juan")
+        
+        with self.assertRaises(MovimientoInvalidoError):
+            game.mover_ficha(10, 11)  # Punto 10 está vacío inicialmente
+    
+    def test_mover_ficha_invalido_color_incorrecto(self):
+        """Test que falla al mover ficha del oponente"""
+        game = Game("Colo", "Juan")
+        
+        with self.assertRaises(MovimientoInvalidoError):
+            game.mover_ficha(0, 1)  # Punto 0 tiene fichas negras, pero es turno de blanco
+    
+    def test_mover_ficha_comer_ficha(self):
+        """Test de comer ficha del oponente"""
+        game = Game("Colo", "Juan")
+        
+        # Poner una ficha negra en punto 4 (punto vacío)
+        game.get_board().agregar_ficha("negro", 4)
+        
+        # Mover ficha blanca del punto 5 al punto 4 (comer)
+        game.mover_ficha(5, 4)
+        
+        # Verificar que se comió la ficha
+        puntos = game.get_board().get_puntos()
+        self.assertEqual(len(puntos[4]), 1)
+        self.assertEqual(puntos[4][0].get_color(), "blanco")
+        
+        # Verificar que la ficha negra está en la barra
+        self.assertEqual(len(game.get_board().get_barra()["negro"]), 1)
+    
