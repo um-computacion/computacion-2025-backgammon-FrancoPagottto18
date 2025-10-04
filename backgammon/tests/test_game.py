@@ -151,4 +151,101 @@ class TestGame(unittest.TestCase):
         
         # Verificar que la ficha negra está en la barra
         self.assertEqual(len(game.get_board().get_barra()["negro"]), 1)
+        
+    def test_mover_ficha_bloqueado(self):
+        """Test que falla al mover a punto bloqueado"""
+        game = Game("Colo", "Juan")
+        
+        # Poner 2 fichas negras en punto 4 (bloqueado)
+        game.get_board().agregar_ficha("negro", 4)
+        game.get_board().agregar_ficha("negro", 4)
+        
+        with self.assertRaises(MovimientoInvalidoError):
+            game.mover_ficha(5, 4)  # No se puede mover a punto bloqueado
+    
+    def test_mover_ficha_juego_terminado(self):
+        """Test que no se pueden hacer movimientos en juego terminado"""
+        game = Game("Colo", "Juan")
+        game.__juego_terminado__ = True
+        
+        with self.assertRaises(JuegoTerminadoError):
+            game.mover_ficha(0, 1)
+    
+    def test_verificar_ganador_sin_ganador(self):
+        """Test de verificación de ganador cuando no hay ganador"""
+        game = Game("Colo", "Juan")
+        ganador = game.verificar_ganador()
+        self.assertIsNone(ganador)
+        self.assertFalse(game.juego_terminado())
+    
+    def test_verificar_ganador_jugador_blanco(self):
+        """Test de verificación de ganador - jugador blanco gana"""
+        game = Game("Colo", "Juan")
+        
+        # Simular que el jugador blanco tiene todas las fichas en casa
+        # Limpiar el tablero
+        game.get_board().__puntos__ = [[] for _ in range(24)]
+        
+        # Poner 15 fichas blancas en casa (puntos 18-23)
+        for i in range(18, 24):
+            for _ in range(3):  # 3 fichas por punto = 18 fichas
+                game.get_board().agregar_ficha("blanco", i)
+        
+        # Ajustar para tener exactamente 15 fichas (quitar 3 fichas extra)
+        for _ in range(3):
+            game.get_board().quitar_ficha(18)
+        
+        ganador = game.verificar_ganador()
+        self.assertEqual(ganador, game.get_player1())
+        self.assertTrue(game.juego_terminado())
+        self.assertEqual(game.get_ganador(), game.get_player1())
+    
+    def test_verificar_ganador_jugador_negro(self):
+        """Test de verificación de ganador - jugador negro gana"""
+        game = Game("Colo", "Juan")
+        
+        # Simular que el jugador negro tiene todas las fichas en casa
+        # Limpiar el tablero
+        game.get_board().__puntos__ = [[] for _ in range(24)]
+        
+        # Poner 15 fichas negras en casa (puntos 0-5)
+        for i in range(6):
+            for _ in range(3):  # 3 fichas por punto = 18 fichas
+                game.get_board().agregar_ficha("negro", i)
+        
+        # Ajustar para tener exactamente 15 fichas (quitar 3 fichas extra)
+        for _ in range(3):
+            game.get_board().quitar_ficha(0)
+        
+        ganador = game.verificar_ganador()
+        self.assertEqual(ganador, game.get_player2())
+        self.assertTrue(game.juego_terminado())
+        self.assertEqual(game.get_ganador(), game.get_player2())
+    
+    def test_reiniciar_juego(self):
+        """Test de reinicio del juego"""
+        game = Game("Colo", "Juan")
+        
+        # Modificar el estado del juego
+        game.cambiar_turno()
+        game.__juego_terminado__ = True
+        game.__ganador__ = game.get_player1()
+        
+        # Reiniciar
+        game.reiniciar_juego()
+        
+        # Verificar que se reinició correctamente
+        self.assertEqual(game.get_turno_actual(), game.get_player1())
+        self.assertFalse(game.juego_terminado())
+        self.assertIsNone(game.get_ganador())
+        
+        # Verificar que el tablero se reinició
+        puntos = game.get_board().get_puntos()
+        self.assertEqual(len(puntos[0]), 2)  # Configuración inicial
+        self.assertEqual(len(puntos[23]), 2)  # Configuración inicial
+
+
+if __name__ == "__main__":
+    unittest.main()
+
     
