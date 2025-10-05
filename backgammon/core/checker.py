@@ -4,12 +4,12 @@ class Checker:
     """
     def __init__(self, color):
         """
-        Inicializa una ficha con el color del jugador ("blanco"|"negro").
+        Inicializa una ficha con el color del jugador
         """
         self.__color__ = color
 
     def get_color(self):
-        """Devuelve el color de la ficha."""
+        """Devuelve el color de la ficha"""
         return self.__color__
 
     def __str__(self):
