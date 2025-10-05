@@ -9,8 +9,8 @@ class TestGame(unittest.TestCase):
     
     def test_inicializacion_correcta(self):
         """Test de inicialización del juego con nombres válidos"""
-        game = Game("Alice", "Bob")
-        self.assertEqual(game.get_player1().get_name(), "Colo)
+        game = Game("Colo", "Juan")
+        self.assertEqual(game.get_player1().get_name(), "Colo")
         self.assertEqual(game.get_player1().get_color(), "blanco")
         self.assertEqual(game.get_player2().get_name(), "Juan")
         self.assertEqual(game.get_player2().get_color(), "negro")
@@ -23,7 +23,7 @@ class TestGame(unittest.TestCase):
         with self.assertRaises(ValueError):
             Game("", "Juan")
         with self.assertRaises(ValueError):
-            Game("Alice", "")
+            Game("Colo", "")
         with self.assertRaises(ValueError):
             Game("", "")
     
@@ -40,7 +40,7 @@ class TestGame(unittest.TestCase):
         self.assertIsNotNone(game.get_board())
         self.assertIsNotNone(game.get_dice())
         self.assertEqual(game.get_player1().get_name(), "Colo")
-        self.assertEqual(game.get_player2().get_name(), "Bob")
+        self.assertEqual(game.get_player2().get_name(), "Juan")
         self.assertEqual(game.get_turno_actual(), game.get_player1())
     
     def test_cambiar_turno(self):
