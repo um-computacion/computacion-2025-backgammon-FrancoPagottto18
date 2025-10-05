@@ -77,6 +77,7 @@ class TestGame(unittest.TestCase):
         self.assertEqual(game.get_dice().get_dado1(), 4)
         self.assertEqual(game.get_dice().get_dado2(), 4)
         self.assertTrue(game.get_dice().es_doble())
+
      def test_tirar_dados_juego_terminado(self):
         """Test que no se pueden tirar dados en juego terminado"""
         game = Game("Colo", "Juan")
