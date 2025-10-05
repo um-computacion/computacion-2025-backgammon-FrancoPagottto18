@@ -8,7 +8,6 @@ class Dice:
         self.__dado1__ = 0
         self.__dado2__ = 0
         self.__tirada_doble__ = False
-    
     def tirar(self):
         """
         Tira los dos dados y retorna los valores
@@ -18,7 +17,6 @@ class Dice:
         self.__dado2__ = random.randint(1, 6)
         self.__tirada_doble__ = (self.__dado1__ == self.__dado2__)
         return self.get_valores()
-    
     def get_valores(self):
         """
         Retorna lista con los valores de los dados,si es doble, repite el valor 4 veces
@@ -41,4 +39,4 @@ class Dice:
         return self.__dado2__
 
     def __repr__(self):
-        return f"Dice(dado1={self.__dado1__}, dado2={self.__dado2__}, doble={self.__tirada_doble__})"
+        return f"Dice({self.__dado1__}, {self.__dado2__}, doble={self.__tirada_doble__})"

@@ -1,4 +1,4 @@
-pycache/
-pytest_cache/
-venv/
 __pycache__/
+venv/
+.coverage
+coverage.xml
