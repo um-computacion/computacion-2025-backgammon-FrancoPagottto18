@@ -1,15 +1,9 @@
-"""
-Punto de entrada para ejecutar la CLI como módulo
-Permite ejecutar: python -m backgammon.cli
-"""
+#!/usr/bin/env python3
 
-import sys
-import os
-
-# Añadir el directorio raíz del proyecto al sys.path
-project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..'))
-if project_root not in sys.path:
-    sys.path.insert(0, project_root)
+"""
+Módulo CLI para desarrolladores
+Permite ejecutar: python3 -m backgammon.cli
+"""
 
 from backgammon.cli.main import main
 
