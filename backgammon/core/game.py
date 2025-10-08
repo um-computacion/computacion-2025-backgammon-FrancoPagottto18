@@ -170,7 +170,6 @@ class Game:
         if hacia != -1:
             # Mover a un punto del tablero
             self.__board__.agregar_ficha(color_actual, hacia)
-
          
     def verificar_ganador(self):
         """
