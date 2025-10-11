@@ -4,7 +4,13 @@ Este documento sigue el formato Keep a Changelog. Los cambios se agrupan por cat
 
 
 ### Added
-- 2025-10-02: Comienzo con los test de game
+- 2025-10-11: Termino con la implementación de los tests de CLI
+- 2025-10-10: Comienzo a implementar testeo del CLI
+- 2025-10-07: Cambio la implementación del cliente y agrego validaciones de los dados en el juego
+- 2025-10-06: Comienzo de implementación de interfaz para el usuario
+- 2025-10-05: Comienzo con el interfaz del juego
+- 2025-10-04: Finalizo con los tests de game
+- 2025-10-03: Continuo con los tests de game
 - 2025-10-01: Agrego get_ganador, juego_terminado, reiniciar_juego
 - 2025-09-30: Implementación de la función que verifica ganador
 - 2025-09-29: Continuo con la función para mover la ficha
@@ -42,7 +48,8 @@ Este documento sigue el formato Keep a Changelog. Los cambios se agrupan por cat
 - 2025-08-21: Comienzo de estructuración de carpetas para el juego backgammon
 
 ### Changed
-- 2025-10-02: Modifico gitignore
+- 2025-10-05: Modifico gitignore
+- 2025-10-05: Correcciones generales en el código
 - 2025-08-28: Corrección de tipeo en atributos (Player)
 - 2025-08-27: Corrección de código y elimino código de checker que no pertenece a esta rama
 - 2025-08-24: Elimino código
@@ -50,6 +57,8 @@ Este documento sigue el formato Keep a Changelog. Los cambios se agrupan por cat
 - 2025-08-21: Configuración de GitHub Classroom Feedback
 
 ### Fixed
+- 2025-10-05: Corrección de error de indentación en test_tirar_dados_juego_terminado
+- 2025-10-05: Corrección de errores en tests
 - 2025-09-04: Corrección, agrego pop() porque con el remove no va a encontrar la instancia
 - 2025-08-28: Corrección de tipeo en atributos
 - 2025-08-27: Corrección de código y elimino código de checker que no pertenece a esta rama
