@@ -245,4 +245,168 @@ class TestBackgammonCLI(unittest.TestCase):
                         # Verificar mensaje de juego terminado
                         self.assertTrue(any("JUEGO TERMINADO" in str(call) for call in mock_print.call_args_list))
     
+    def test_cambiar_turno_sin_partida(self):
+        """Test que falla al cambiar turno sin partida"""
+        with patch('builtins.print') as mock_print:
+            self.cli._cambiar_turno()
+            
+            # Verificar mensaje de error
+            self.assertTrue(any("No hay partida" in str(call) for call in mock_print.call_args_list))
     
+    def test_cambiar_turno_con_partida(self):
+        """Test de cambio de turno con partida activa"""
+        # Crear partida
+        self.cli.__game__ = Game("Colo", "Juan")
+        self.cli.__dados_disponibles__ = [3, 5]
+        self.cli.__dados_usados__ = [2]
+        
+        with patch.object(self.cli.__game__, 'cambiar_turno') as mock_cambiar:
+            with patch('builtins.print') as mock_print:
+                self.cli._cambiar_turno()
+                
+                # Verificar que se cambió el turno
+                mock_cambiar.assert_called_once()
+                
+                # Verificar que se limpiaron los dados
+                self.assertEqual(self.cli.__dados_disponibles__, [])
+                self.assertEqual(self.cli.__dados_usados__, [])
+                
+                # Verificar mensaje de cambio
+                self.assertTrue(any("Turno:" in str(call) for call in mock_print.call_args_list))
+                self.assertTrue(any("Use 'dados'" in str(call) for call in mock_print.call_args_list))
+    
+    def test_mostrar_ayuda(self):
+        """Test de mostrar ayuda"""
+        with patch('builtins.print') as mock_print:
+            self.cli._mostrar_ayuda()
+            
+            # Verificar que se muestran los comandos
+            self.assertTrue(any("COMANDOS:" in str(call) for call in mock_print.call_args_list))
+            self.assertTrue(any("nueva" in str(call) for call in mock_print.call_args_list))
+            self.assertTrue(any("dados" in str(call) for call in mock_print.call_args_list))
+            self.assertTrue(any("mover" in str(call) for call in mock_print.call_args_list))
+            self.assertTrue(any("pasar" in str(call) for call in mock_print.call_args_list))
+            
+            # Verificar que se muestran las reglas
+            self.assertTrue(any("REGLAS:" in str(call) for call in mock_print.call_args_list))
+            self.assertTrue(any("Blancas van del 24 al 1" in str(call) for call in mock_print.call_args_list))
+            self.assertTrue(any("Negras van del 1 al 24" in str(call) for call in mock_print.call_args_list))
+    
+    def test_terminar(self):
+        """Test de terminar el juego"""
+        self.cli._terminar()
+        
+        # Verificar que se marcó como no corriendo
+        self.assertFalse(self.cli.__running__)
+    
+    @patch('builtins.input', side_effect=['nueva', 'Colo', 'Juan', 'dados', 'mover', '1', '4', 'pasar', 'salir'])
+    def test_flujo_completo_juego(self, mock_input):
+        """Test de flujo completo de juego"""
+        with patch('builtins.print') as mock_print:
+            # Simular el flujo completo
+            self.cli._nueva_partida()
+            self.cli._tirar_dados()
+            self.cli._mover_ficha()
+            self.cli._cambiar_turno()
+            self.cli._terminar()
+            
+            # Verificar que se ejecutaron todos los comandos
+            self.assertIsNotNone(self.cli.__game__)
+            self.assertFalse(self.cli.__running__)
+    
+    def test_comando_invalido(self):
+        """Test de comando inválido"""
+        with patch('builtins.print') as mock_print:
+            # Simular comando inválido
+            self.cli._procesar_comando("comando_invalido")
+            
+            # Verificar mensaje de error
+            self.assertTrue(any("no válido" in str(call) for call in mock_print.call_args_list))
+    
+    def test_comando_nueva(self):
+        """Test de comando nueva"""
+        with patch.object(self.cli, '_nueva_partida') as mock_nueva:
+            self.cli._procesar_comando("nueva")
+            mock_nueva.assert_called_once()
+    
+    def test_comando_dados(self):
+        """Test de comando dados"""
+        with patch.object(self.cli, '_tirar_dados') as mock_dados:
+            self.cli._procesar_comando("dados")
+            mock_dados.assert_called_once()
+    
+    def test_comando_mover(self):
+        """Test de comando mover"""
+        with patch.object(self.cli, '_mover_ficha') as mock_mover:
+            self.cli._procesar_comando("mover")
+            mock_mover.assert_called_once()
+    
+    def test_comando_pasar(self):
+        """Test de comando pasar"""
+        with patch.object(self.cli, '_cambiar_turno') as mock_pasar:
+            self.cli._procesar_comando("pasar")
+            mock_pasar.assert_called_once()
+    
+    def test_comando_ayuda(self):
+        """Test de comando ayuda"""
+        with patch.object(self.cli, '_mostrar_ayuda') as mock_ayuda:
+            self.cli._procesar_comando("ayuda")
+            mock_ayuda.assert_called_once()
+    
+    def test_comando_salir(self):
+        """Test de comando salir"""
+        with patch.object(self.cli, '_terminar') as mock_salir:
+            self.cli._procesar_comando("salir")
+            mock_salir.assert_called_once()
+    
+    @patch('builtins.input', side_effect=['nueva', 'Colo', 'Juan', 'salir'])
+    @patch('builtins.print')
+    def test_run_completo(self, mock_print, mock_input):
+        """Test del método run completo"""
+        # Este test simula el flujo completo del CLI
+        self.cli.run()
+        
+        # Verificar que se ejecutó el flujo principal
+        self.assertFalse(self.cli.__running__)
+    
+    def test_ver_tablero_sin_partida(self):
+        """Test de mostrar tablero sin partida"""
+        with patch('builtins.print') as mock_print:
+            self.cli._ver_tablero()
+            
+            # Verificar mensaje de error
+            self.assertTrue(any("No hay partida" in str(call) for call in mock_print.call_args_list))
+    
+    def test_ver_tablero_con_partida(self):
+        """Test de mostrar tablero con partida activa"""
+        # Crear partida
+        self.cli.__game__ = Game("Colo", "Juan")
+        
+        with patch('builtins.print') as mock_print:
+            self.cli._ver_tablero()
+            
+            # Verificar que se muestra el tablero
+            self.assertTrue(any("TABLERO DE BACKGAMMON" in str(call) for call in mock_print.call_args_list))
+            self.assertTrue(any("TURNO ACTUAL" in str(call) for call in mock_print.call_args_list))
+    
+    def test_ver_tablero_con_fichas_en_barra(self):
+        """Test de mostrar tablero con fichas en barra"""
+        # Crear partida
+        self.cli.__game__ = Game("Colo", "Juan")
+        
+        # Agregar fichas a la barra
+        self.cli.__game__.get_board().agregar_barra("blanco")
+        self.cli.__game__.get_board().agregar_barra("negro")
+        
+        with patch('builtins.print') as mock_print:
+            self.cli._ver_tablero()
+            
+            # Verificar que se muestran las fichas en barra
+            self.assertTrue(any("Blancas: 1" in str(call) for call in mock_print.call_args_list))
+            self.assertTrue(any("Negras: 1" in str(call) for call in mock_print.call_args_list))
+
+
+if __name__ == "__main__":
+    unittest.main()
+
+   
