@@ -21,10 +21,10 @@ El proyecto implementa un juego de Backgammon en Python con arquitectura de sepa
 ## Justificación de Atributos
 
 Todos los atributos usan `__atributo__` según los requisitos del proyecto:
-- **Game**: `__tablero__`, `__jugadores__`, `__dados__`, `__turno_actual__`
-- **Board**: `__puntos__`, `__barra_blanca__`, `__barra_negra__`
-- **Player**: `__nombre__`, `__color__`
-- **Dice**: `__dado1__`, `__dado2__`, `__ultima_tirada__`
+- **Game**: `__board__`, `__player1__`, `__player2__`, `__dice__`, `__turno_actual__`, `__juego_terminado__`, `__ganador__`, `__tipo_victoria__`, `__fichas_sacadas__`
+- **Board**: `__puntos__`, `__barra__` (dict con "blanco" y "negro")
+- **Player**: `__name__`, `__color__`
+- **Dice**: `__dado1__`, `__dado2__`, `__tirada_doble__`
 
 ## Decisiones de Diseño Relevantes
 
@@ -36,9 +36,9 @@ Todos los atributos usan `__atributo__` según los requisitos del proyecto:
 ## Excepciones y Manejo de Errores
 
 **Excepciones definidas:**
-- **MovimientoInvalidoException**: Movimientos que violan reglas del juego
-- **PosicionInvalidaException**: Posiciones fuera del tablero
-- **JugadorInvalidoException**: Operaciones con jugadores inexistentes
+- **MovimientoInvalidoError**: Movimientos que violan reglas del juego
+- **JuegoTerminadoError**: Operaciones en un juego terminado
+- **GameError**: Excepción base para errores del juego
 
 **Estrategia:** Validación temprana, mensajes descriptivos y recuperación controlada
 
