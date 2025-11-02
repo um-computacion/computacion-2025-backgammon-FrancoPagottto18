@@ -4,6 +4,10 @@ Este documento sigue el formato Keep a Changelog. Los cambios se agrupan por cat
 
 
 ### Added
+- 2025-11-01: Implemento área de fichas guardadas en pygame_ui con hitmap para bear off desde área dedicada
+- 2025-11-01: Implemento detección automática de victoria cuando se retiran todas las fichas del tablero
+- 2025-11-01: Modifico regla de bear off para permitir usar dados mayores o iguales a la distancia requerida
+- 2025-11-01: Agrego tests adicionales para alcanzar 90% de cobertura en game.py y cli/main.py (bear off, gammon/backgammon, manejo de excepciones)
 - 2025-10-11: Termino con la implementación de los tests de CLI
 - 2025-10-10: Comienzo a implementar testeo del CLI
 - 2025-10-07: Cambio la implementación del cliente y agrego validaciones de los dados en el juego
@@ -48,6 +52,8 @@ Este documento sigue el formato Keep a Changelog. Los cambios se agrupan por cat
 - 2025-08-21: Comienzo de estructuración de carpetas para el juego backgammon
 
 ### Changed
+- 2025-11-01: Simplifico mensaje de victoria para mostrar solo el color del ganador
+- 2025-11-01: Mejoro cobertura de tests: game.py alcanza 94% y cli/main.py alcanza 90%
 - 2025-10-05: Modifico gitignore
 - 2025-10-05: Correcciones generales en el código
 - 2025-08-28: Corrección de tipeo en atributos (Player)
@@ -57,6 +63,7 @@ Este documento sigue el formato Keep a Changelog. Los cambios se agrupan por cat
 - 2025-08-21: Configuración de GitHub Classroom Feedback
 
 ### Fixed
+- 2025-11-01: Corrección de hit_test en pygame_ui/main.py para usar hasattr en lugar de isinstance
 - 2025-10-05: Corrección de error de indentación en test_tirar_dados_juego_terminado
 - 2025-10-05: Corrección de errores en tests
 - 2025-09-04: Corrección, agrego pop() porque con el remove no va a encontrar la instancia
