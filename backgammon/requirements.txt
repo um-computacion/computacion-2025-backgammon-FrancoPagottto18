@@ -1,0 +1,14 @@
+# Dependencias del proyecto Backgammon
+# Desarrollado para estudiantes de primer año de computación
+
+# Interfaz gráfica
+pygame>=2.1.0
+
+# Testing
+pytest>=7.0.0
+pytest-cov>=4.0.0
+
+# Desarrollo
+black>=22.0.0
+flake8>=5.0.0
+

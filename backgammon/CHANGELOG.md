@@ -1,8 +1,6 @@
 # Changelog
 
 Este documento sigue el formato Keep a Changelog. Los cambios se agrupan por categorías: Added, Changed y Fixed.
-
-
 ### Added
 - 2025-11-01: Implemento área de fichas guardadas en pygame_ui con hitmap para bear off desde área dedicada
 - 2025-11-01: Implemento detección automática de victoria cuando se retiran todas las fichas del tablero
